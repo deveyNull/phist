@@ -10,8 +10,11 @@ This is a side-project, a labor of love, but it's a damn good time and we'll be 
 ###Here's a quick description of each file:
 
 **imgHash.py** = The actual file containing the perceptual hashing functions
+
 **hashFunk.py** = The guts of the tool, an absolute pile of functions that make everything else work
+
 **phash.py** = The pretty file every other tool imports
+
 **phashT.py** = a terminal client that can be used to index directories, check images, or check directories
 
 
