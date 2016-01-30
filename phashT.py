@@ -9,61 +9,61 @@ class phistAction:
         self.directoryCheck = 0
         self.imageCheck = 0
 
-    self.dirToHash = ""
-    self.flatDbName = ""
-    self.checkDirectory = ""
+        self.dirToHash = ""
+        self.flatDbName = ""
+        self.checkDirectory = ""
 
-    # https://docs.python.org/2/library/argparse.html
-    # You lazy little shit
-    if sys.argv[1] == "-hd":
-        self.hashDirectory = 1
-        self.dirToHash = sys.argv[2]
-        self.flatDbName = sys.argv[3]
-    elif sys.argv[1] == "-dc":
-        self.directoryCheck = 1
-        self.checkDirectory = sys.argv[2]
-        self.flatDbName = sys.argv[3]
-    elif sys.argv[1] == "-ic":
-        self.imageCheck = 1
-        self.imageName = sys.argv[2]
-        self.flatDbName = sys.argv[3]
+        # https://docs.python.org/2/library/argparse.html
+        # You lazy little shit
+        if sys.argv[1] == "-hd":
+            self.hashDirectory = 1
+            self.dirToHash = sys.argv[2]
+            self.flatDbName = sys.argv[3]
+        elif sys.argv[1] == "-dc":
+            self.directoryCheck = 1
+            self.checkDirectory = sys.argv[2]
+            self.flatDbName = sys.argv[3]
+        elif sys.argv[1] == "-ic":
+            self.imageCheck = 1
+            self.imageName = sys.argv[2]
+            self.flatDbName = sys.argv[3]
 
-    if self.hashDirectory == 1:
-        self.hDirectory()
-    elif self.directoryCheck == 1:
-        self.cDirectory()
-    elif self.imageCheck == 1:
-        self.cImage()
-
-
-def showImage(self, img):
-    Image.open(img).show()
-    print(img)
+        if self.hashDirectory == 1:
+            self.hDirectory()
+        elif self.directoryCheck == 1:
+            self.cDirectory()
+        elif self.imageCheck == 1:
+            self.cImage()
 
 
-def hDirectory(self):
-    newFile(self.dirToHash, self.flatDbName)
+    def showImage(self, img):
+        Image.open(img).show()
+        print(img)
 
 
-def cImage(self):
-    flatFileLoad(self.flatDbName)
-    hester = list(checkImage(self.imageName, self.flatDbName))
-    print(hester)
+    def hDirectory(self):
+        newFile(self.dirToHash, self.flatDbName)
 
 
-def cDirectory(self):
-    flatFileLoad(self.flatDbName)
-    listOfImages = directoryEater(self.checkDirectory)
+    def cImage(self):
+        flatFileLoad(self.flatDbName)
+        hester = list(checkImage(self.imageName, self.flatDbName))
+        print(hester)
 
-    hester = []
 
-    for image in listOfImages:
+    def cDirectory(self):
+        flatFileLoad(self.flatDbName)
+        listOfImages = directoryEater(self.checkDirectory)
 
-        a = checkImage(str(image), self.flatDbName)
+        hester = []
 
-        if a:
-            hester.append([image, a])
-    print(hester)
+        for image in listOfImages:
+
+            a = checkImage(str(image), self.flatDbName)
+
+            if a:
+                hester.append([image, a])
+        print(hester)
 
 
 a = phistAction()
