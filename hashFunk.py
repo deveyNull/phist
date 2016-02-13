@@ -221,8 +221,7 @@ def checkHashesAdd(imgHashes, fileName):  # O(1) Lookup... This is how we do it
         return False
 
 
-def directoryEater(
-        directoryName):  # Given a directory name, returns list of files in directory for entering into bulkLoader
+def directoryEater(directoryName):  # Given a directory name, returns list of files in directory for entering into bulkLoader
     path = os.getcwd()
     fileNamesWSpaces = os.listdir(path)
     for filename in fileNamesWSpaces:
