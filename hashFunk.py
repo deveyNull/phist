@@ -145,7 +145,7 @@ def checkHashes(imgHashes, fileName):  # O(1) Lookup... This is how we do it
         for i in bucket:  # For all items in bucket
             h1 = hamming1(imgHashes[0][2], i[0])  # Get hamming distance between queried images 16 byte phash and item
             if h1 < 3:  # If hamming distance is less than ___
-                return "pBucket", i[1], p32[i[1]]  # Return True, 32 byte pHash, data
+                return "pBk", i[1], p32[i[1]]  # Return True, 32 byte pHash, data
 
             else:  # Should modularize this more, no time now
                 if imgHashes[1][1] in dBuckets:  # If 4 byte hash in dBuckets
@@ -153,7 +153,7 @@ def checkHashes(imgHashes, fileName):  # O(1) Lookup... This is how we do it
                     for j in bucket:  # Same thing
                         h1 = hamming1(imgHashes[1][2], j[0])
                         if h1 < 3:
-                            return "p-dBucket", j[1], d32[j[1]]
+                            return "p-d", j[1], d32[j[1]]
                         else:  # Image not in database
                             return False
                 else:  # Image not in database
@@ -165,7 +165,7 @@ def checkHashes(imgHashes, fileName):  # O(1) Lookup... This is how we do it
             h1 = hamming1(imgHashes[1][2], i[0])
             if h1 < 3:
                 writeHashes(imgHashes, fileName)
-                return "dBucket", i[1], d32[i[1]]
+                return "dBk", i[1], d32[i[1]]
             else:  # Image not in database
                 return False
     else:  # Does not match any buckets
@@ -187,7 +187,7 @@ def checkHashesAdd(imgHashes, fileName):  # O(1) Lookup... This is how we do it
             h1 = hamming1(imgHashes[0][2], i[0])  # Get hamming distance between queried images 16 byte phash and item
             if h1 < 3:  # If hamming distance is less than ___
                 writeHashes(imgHashes, fileName)  # Add hash to databases
-                return "pBucket", i[1], p32[i[1]]  # Return True, 32 byte pHash, data
+                return "pBk", i[1], p32[i[1]]  # Return True, 32 byte pHash, data
 
             else:  # Should modularize this more, no time now
                 if imgHashes[1][1] in dBuckets:  # If 4 byte hash in dBuckets
@@ -196,7 +196,7 @@ def checkHashesAdd(imgHashes, fileName):  # O(1) Lookup... This is how we do it
                         h1 = hamming1(imgHashes[1][2], j[0])
                         if h1 < 3:
                             writeHashes(imgHashes, fileName)
-                            return "p-dBucket", j[1], d32[j[1]]
+                            return "p-d", j[1], d32[j[1]]
                         else:  # Image not in database
                             # print("p-d fail. Not in Database, adding.")
                             writeHashes(imgHashes, fileName)  # Add to database
@@ -210,7 +210,7 @@ def checkHashesAdd(imgHashes, fileName):  # O(1) Lookup... This is how we do it
             h1 = hamming1(imgHashes[1][2], i[0])
             if h1 < 3:
                 writeHashes(imgHashes, fileName)
-                return "dBucket", i[1], d32[i[1]]
+                return "dBk", i[1], d32[i[1]]
             else:  # Image not in database
                 # print("d fail. Not in Database, adding.")
                 writeHashes(imgHashes, fileName)  # Add to database

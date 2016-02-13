@@ -65,12 +65,12 @@ class phistAction:
                 hester.append([image, a])
         
         for i in hester:
-            s = ""
+            s = str(i[0].split("/")[2])
             for j in i[1][2]:
-                tmp = j[0] + ": "
+                tmp = j[0]
                 while len(tmp) < 20:
                     tmp += " "
-                s += tmp + "\t" + i[1][0] + "\t" + i[1][1] + "\t\t"
+                s += ":\t" + tmp + "\t" + i[1][0] + "\t" + i[1][1] + "\t\t"
             print(s)
 
 
