@@ -98,7 +98,7 @@ def phashes(image, hash_size=12, highfreq_factor=4, hash_size2=4, highfreq_facto
     dctlowfreq3 = dct3[:hash_size3, :hash_size3]
     med3 = numpy.median(dctlowfreq3)
     diff3 = dctlowfreq3 > med3
-    return toHashes(diff, diff2, diff3)
+    return toHashes(diff, diff, diff3)
 
 
 def dhashes(image, hash_size1=12, hash_size2=4, hash_size3=8):
@@ -183,7 +183,7 @@ def hex_to_hash(hexstr):
     return ImageHash(numpy.array(l))
 
 
-def average_hash(image, hash_size=12):
+def average_hash(image, hash_size=16):
     """
     Average Hash computation
 
@@ -199,8 +199,8 @@ def average_hash(image, hash_size=12):
     diff = pixels > avg
             
     tempd = diff
-    Nbig = 12
-    Nsmall = 6
+    Nbig = 16
+    Nsmall = 8
     Nsmall2 = 4
 
     diff2 = diff.reshape([Nsmall, Nbig/Nsmall, Nsmall, Nbig/Nsmall]).mean(3).mean(1)
@@ -208,10 +208,10 @@ def average_hash(image, hash_size=12):
 
     diff2 = np.around(diff2)
     diff3 = np.around(diff3)
-    return toHashes(diff, diff2, diff3)
+    return toHashes(diff, diff3, diff2)
 
 
-def phash(image, hash_size=12, highfreq_factor=4):
+def phash(image, hash_size=16, highfreq_factor=4):
     """
     Perceptual Hash computation.
 
@@ -229,10 +229,10 @@ def phash(image, hash_size=12, highfreq_factor=4):
     dctlowfreq = dct[:hash_size, :hash_size]
     med = numpy.median(dctlowfreq)
     diff = dctlowfreq > med
-    
+
     tempd = diff
-    Nbig = 12
-    Nsmall = 10
+    Nbig = 16
+    Nsmall = 8
     Nsmall2 = 4
 
     diff2 = diff.reshape([Nsmall, Nbig/Nsmall, Nsmall, Nbig/Nsmall]).mean(3).mean(1)
@@ -286,7 +286,7 @@ def phash_simple(image, hash_size=8, highfreq_factor=4):
     return ImageHash(diff)
 
 
-def dhash(image, hash_size=12):
+def dhash(image, hash_size=16):
     """
     Difference Hash computation.
 
@@ -300,10 +300,9 @@ def dhash(image, hash_size=12):
     pixels = numpy.array(image.getdata(), dtype=numpy.float).reshape((hash_size + 1, hash_size))
     # compute differences
     diff = pixels[1:, :] > pixels[:-1, :]
-        
     tempd = diff
-    Nbig = 12
-    Nsmall = 10
+    Nbig = 16
+    Nsmall = 8
     Nsmall2 = 4
 
     diff2 = diff.reshape([Nsmall, Nbig/Nsmall, Nsmall, Nbig/Nsmall]).mean(3).mean(1)

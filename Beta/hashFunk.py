@@ -27,8 +27,8 @@ import time
 ##                                                                               ##
 ###################################################################################
 def phashes(image):  # returns 32 byte dct hash, 4 byte, 16 byte
-    return imgHash.phashes(Image.open(image))
-    #return imgHash.phash(Image.open(image))
+    #return imgHash.phashes(Image.open(image))
+    return imgHash.phash(Image.open(image))
 
 ###################################################################################
 ##                        - - - GRADIENT HASH - - -                              ##
@@ -38,10 +38,19 @@ def phashes(image):  # returns 32 byte dct hash, 4 byte, 16 byte
 ##                                                                               ##
 ###################################################################################
 def dhashes(image):  # returns 32 byte gradient hash, 4 byte, 16 byte
-    return imgHash.dhashes(Image.open(image))
-    #return imgHash.dhash(Image.open(image))
+    #return imgHash.dhashes(Image.open(image))
+    return imgHash.dhash(Image.open(image))
 
-
+###################################################################################
+##                        - - - Average HASH - - -                               ##
+## 										                                         ##										
+##                                    			                                 ##
+##			                                                                     ##
+##                                                                               ##
+###################################################################################
+def ahashes(image):  # returns 32 byte gradient hash, 4 byte, 16 byte
+    #return imgHash.dhashes(Image.open(image))
+    return imgHash.average_hash(Image.open(image))
 ###################################################################################
 ##                       - - - GET DATA - - -                                    ##
 ## 									                                        	 ##										
@@ -78,7 +87,7 @@ def hamming1(str1, str2):  # returns distance between strings
 ###################################################################################
 
 def getHashes(image):
-    return [phashes(image), dhashes(image), getData(image)]
+    return [phashes(image), ahashes(image), getData(image)]
 
 
 def bulkLoader(listOfFiles):  # takes a list of files and returns a list of their full hashes
@@ -94,9 +103,9 @@ def dbBuilder(hashList):  # Database Builder
 
     for i in hashList:
         p32[i[0][0]].append(list(i[2]))
-        d32[i[1][0]].append(list(i[2]))
+        a32[i[1][0]].append(list(i[2]))
         pBuckets[i[0][1]].append((i[0][2], i[0][0]))
-        dBuckets[i[1][1]].append((i[1][2], i[1][0]))
+        aBuckets[i[1][1]].append((i[1][2], i[1][0]))
 
 def readHashes(fileName):  # reads full hashes out of a flat file and returns a list of them
     with open(fileName, 'r') as f:
@@ -137,9 +146,9 @@ def checkHashes(imgHashes, fileName):  # O(1) Lookup... This is how we do it
 
         return "p32", imgHashes[0][0], p32[imgHashes[0][0]]
 
-    elif imgHashes[1][0] in d32:  # Check gradient hashtable for hash
+    elif imgHashes[1][0] in a32:  # Check gradient hashtable for hash
 
-        return "d32", imgHashes[1][0], d32[imgHashes[1][0]]
+        return "a32", imgHashes[1][0], a32[imgHashes[1][0]]
 
     elif imgHashes[0][1] in pBuckets:  # If 4 byte hash in pBuckets
         bucket = pBuckets[imgHashes[0][1]]
@@ -149,24 +158,24 @@ def checkHashes(imgHashes, fileName):  # O(1) Lookup... This is how we do it
                 return "pBk", i[1], p32[i[1]]  # Return True, 32 byte pHash, data
 
             else:  # Should modularize this more, no time now
-                if imgHashes[1][1] in dBuckets:  # If 4 byte hash in dBuckets
-                    bucket = dBuckets[imgHashes[1][1]]
+                if imgHashes[1][1] in aBuckets:  # If 4 byte hash in aBuckets
+                    bucket = aBuckets[imgHashes[1][1]]
                     for j in bucket:  # Same thing
                         h1 = hamming1(imgHashes[1][2], j[0])
                         if h1 < 3:
-                            return "p-d", j[1], d32[j[1]]
+                            return "p-a", j[1], a32[j[1]]
                         else:  # Image not in database
                             return False
                 else:  # Image not in database
                     return False
 
-    elif imgHashes[1][1] in dBuckets:  # If 4 byte hash in dBuckets
-        bucket = dBuckets[imgHashes[1][1]]
+    elif imgHashes[1][1] in aBuckets:  # If 4 byte hash in aBuckets
+        bucket = aBuckets[imgHashes[1][1]]
         for i in bucket:  # Same thing
             h1 = hamming1(imgHashes[1][2], i[0])
             if h1 < 3:
-
-                return "dBk", i[1], d32[i[1]]
+                
+                return "aBk", i[1], a32[i[1]]
             else:  # Image not in database
                 return False
     else:  # Does not match any buckets
@@ -178,9 +187,9 @@ def checkHashesAdd(imgHashes, fileName):  # O(1) Lookup... This is how we do it
 
         return "p32", imgHashes[0][0], p32[imgHashes[0][0]]
 
-    elif imgHashes[1][0] in d32:  # Check gradient hashtable for hash
+    elif imgHashes[1][0] in a32:  # Check gradient hashtable for hash
 
-        return "d32", imgHashes[1][0], d32[imgHashes[1][0]]
+        return "a32", imgHashes[1][0], a32[imgHashes[1][0]]
 
     elif imgHashes[0][1] in pBuckets:  # If 4 byte hash in pBuckets
         bucket = pBuckets[imgHashes[0][1]]
@@ -191,27 +200,27 @@ def checkHashesAdd(imgHashes, fileName):  # O(1) Lookup... This is how we do it
                 return "pBk", i[1], p32[i[1]]  # Return True, 32 byte pHash, data
 
             else:  # Should modularize this more, no time now
-                if imgHashes[1][1] in dBuckets:  # If 4 byte hash in dBuckets
-                    bucket = dBuckets[imgHashes[1][1]]
+                if imgHashes[1][1] in aBuckets:  # If 4 byte hash in aBuckets
+                    bucket = aBuckets[imgHashes[1][1]]
                     for j in bucket:  # Same thing
                         h1 = hamming1(imgHashes[1][2], j[0])
                         if h1 < 3:
                             writeHashes(imgHashes, fileName)
-                            return "p-d", j[1], d32[j[1]]
+                            return "p-a", j[1], a32[j[1]]
                         else:  # Image not in database
-                            # print("p-d fail. Not in Database, adding.")
+                            # print("p-a fail. Not in Database, adding.")
                             writeHashes(imgHashes, fileName)  # Add to database
                             return False
                 else:  # Image not in database
                     return False
 
-    elif imgHashes[1][1] in dBuckets:  # If 4 byte hash in dBuckets
-        bucket = dBuckets[imgHashes[1][1]]
+    elif imgHashes[1][1] in aBuckets:  # If 4 byte hash in aBuckets
+        bucket = aBuckets[imgHashes[1][1]]
         for i in bucket:  # Same thing
             h1 = hamming1(imgHashes[1][2], i[0])
             if h1 < 3:
                 writeHashes(imgHashes, fileName)
-                return "dBk", i[1], d32[i[1]]
+                return "aBk", i[1], a32[i[1]]
             else:  # Image not in database
                 # print("d fail. Not in Database, adding.")
                 writeHashes(imgHashes, fileName)  # Add to database
@@ -263,8 +272,8 @@ def checkImageAdd(image, dbName):
 ##    Don't Touch!	##
 ##########################
 p32 = defaultdict(list)  # 32 byte discrete cosine transform hash table
-d32 = defaultdict(list)  # 32 byte gradient hash table
+a32 = defaultdict(list)  # 32 byte gradient hash table
 pBuckets = defaultdict(list)  # Staggered(4 byte -> 16 byte) dct hash table
-dBuckets = defaultdict(list)  # Staggered(4 byte -> 16 byte) gradient hash table
+aBuckets = defaultdict(list)  # Staggered(4 byte -> 16 byte) gradient hash table
 
 ########################################################################################
