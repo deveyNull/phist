@@ -1,4 +1,4 @@
-from hashFunk import *
+
 import sys
 from phash import *
 
@@ -11,7 +11,7 @@ class phistAction:
 
         self.dirToHash = ""
         self.flatDbName = ""
-        self.checkDirectory = ""
+        self.queryDirectory = ""
 
         # https://docs.python.org/2/library/argparse.html
         # You lazy little shit
@@ -21,7 +21,7 @@ class phistAction:
             self.flatDbName = sys.argv[3]
         elif sys.argv[1] == "-dc":
             self.directoryCheck = 1
-            self.checkDirectory = sys.argv[2]
+            self.queryDirectory = sys.argv[2]
             self.flatDbName = sys.argv[3]
         elif sys.argv[1] == "-ic":
             self.imageCheck = 1
@@ -36,42 +36,32 @@ class phistAction:
             self.cImage()
 
 
-    def showImage(self, img):
-        Image.open(img).show()
-        print(img)
-
-
     def hDirectory(self):
-        newFile(self.dirToHash, self.flatDbName)
+        hashDirectory(self.dirToHash, self.flatDbName)
 
 
     def cImage(self):
-        flatFileLoad(self.flatDbName)
-        hester = list(checkImage(self.imageName, self.flatDbName))
+        hester = imageChecker(self.imageName, self.flatDbName)
         print(hester)
 
 
     def cDirectory(self):
-        flatFileLoad(self.flatDbName)
-        listOfImages = directoryEater(self.checkDirectory)
-
-        hester = []
-
-        for image in listOfImages:
-
-            a = checkImage(str(image), self.flatDbName)
-
-            if a:
-                hester.append([image, a])
+        hester = directoryChecker(self.queryDirectory, self.flatDbName)
         
+        print("\n\tFile Queried:\t\tFile Matched:\t\tDate Entered:\n")
         for i in hester:
-            s = str(i[0].split("/")[2])
-            for j in i[1][2]:
+           
+            s = "\t" + str(i[0].split("/")[3])
+            
+            for j in i:
+                #print(j)
                 tmp = j[0]
                 while len(tmp) < 20:
                     tmp += " "
-                s += ":\t" + tmp + "\t" + i[1][0] + "\t" + i[1][1] + "\t\t"
-            print(s)
+            s += ":\t" + "\t" + i[1][2][0][0] + "\t""\t" + i[1][2][0][1] 
+            print(s)      
+        print("\n") 
+    
 
 
 a = phistAction()

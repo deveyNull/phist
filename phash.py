@@ -1,41 +1,33 @@
 from hashFunk import *
-import sys
 
-
-def showImage(img):
-    Image.open(img).show()
-    print(img)
-
-
-def hDirectory(dirToHash, flatDbName):
+def hashDirectory(dirToHash, flatDbName):
     newFile(dirToHash, flatDbName)
 
 
-def cImage(image, flatDbName):
+def imageChecker(image, flatDbName):
     flatFileLoad(flatDbName)
 
-    hester = list(checkImage(image, flatDbName))
-    return hester
+    hesterImage = checkImage(image, flatDbName)
+    return hesterImage
 
+def imageCheckerSingle(image, flatDbName):
+    # DOES NOT LOAD DB
+    
+    hesterImage = checkImage(image, flatDbName)
+    return hesterImage
 
-def cDirectory(checkDirectory, flatDbName):
+def directoryChecker(queryDirectory, flatDbName):
     flatFileLoad(flatDbName)
-    listOfImages = directoryEater(checkDirectory)
+    listOfImages = directoryEater(queryDirectory)
 
     hester = []
-
     for image in listOfImages:
-        a = checkImage(str(image), flatDbName)
+
+        a = imageCheckerSingle(image, flatDbName)
+
         if a:
             hester.append([image, a])
     return hester
 
 
-hashDirectory = 0
-directoryCheck = 0
-imageCheck = 0
-
-dirToHash = ""
-flatDbName = ""
-checkDirectory = ""
 
