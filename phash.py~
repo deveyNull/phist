@@ -1,0 +1,77 @@
+from hashFunk import *
+import sys
+
+
+def showImage(img):
+	Image.open(img).show() 
+	print(img)
+	
+def hDirectory(dirtoHash, flatDbName):
+	newFile(dirToHash, flatDbName)
+	
+def cImage(image, flatDbName):
+	flatFileLoad(flatDbName)
+	hester = []
+	hester = list(checkImage(image, flatDbName))
+	return(hester)
+			
+def cDirectory(checkDirectory, flatDbName):
+	flatFileLoad(flatDbName)
+	listOfImages = directoryEater(checkDirectory)
+	a = []
+	hester = []
+	
+	for image in listOfImages:
+		a = checkImage(str(image), flatDbName)
+		a = 0
+		if a != False:
+			hester.append([image , a])
+	return(hester)
+hashDirectory = 0
+directoryCheck = 0
+imageCheck = 0
+
+dirToHash = ""
+flatDbName = ""	
+checkDirectory = ""
+	
+
+"""
+def main():
+
+	hashDirectory = 0
+	directoryCheck = 0
+	imageCheck = 0
+
+	dirToHash = ""
+	flatDbName = ""	
+	checkDirectory = ""
+	
+	# https://docs.python.org/2/library/argparse.html
+	# You lazy little shit
+
+	if sys.argv[1] == "-hd":
+		hashDirectory = 1
+		dirToHash = sys.argv[2]
+		flatDbName = sys.argv[3]
+	elif sys.argv[1] == "-dc":
+		directoryCheck = 1
+		checkDirectory = sys.argv[2]
+		flatDbName = sys.argv[3]
+	elif sys.argv[1] == "-ic":
+		imageCheck = 1
+		imageName = sys.argv[2]
+		flatDbName = sys.argv[3]
+	
+	
+	if hashDirectory == 1:
+		hDirectory(dirtoHash, flatDbName)
+	elif directoryCheck == 1: 
+		cDirectory(checkDirectory, flatDbName)
+	elif imageCheck == 1: 
+		cImage(image, flatDbName)
+			
+		     
+main()
+"""
+

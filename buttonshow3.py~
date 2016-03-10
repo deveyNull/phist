@@ -1,0 +1,26 @@
+import sys
+import Tkinter as tk
+
+def toggle():
+    mylabel.place(x=20, y=50)
+    print "Now you see it"
+    btnToggle["text"] = "Hide Example"
+    mylabel.visible = not mylabel.visible
+
+root = tk.Tk()
+
+print "TkVersion", tk.TkVersion
+print "TclVersion", tk.TclVersion
+print "Python version", sys.version_info
+
+mylabel = tk.Label(text="Example")
+mylabel.visible = True
+
+
+
+btnToggle = tk.Button(text="Hide Example", command=toggle)
+btnToggle.place(x=70, y=150)
+
+root.mainloop()
+
+

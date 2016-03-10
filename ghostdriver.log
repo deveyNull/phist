@@ -1,0 +1,10 @@
+PhantomJS is launching GhostDriver...
+[INFO  - 2016-02-08T21:30:38.487Z] GhostDriver - Main - running on port 40011
+[INFO  - 2016-02-08T21:30:39.244Z] Session [32d7a170-ceab-11e5-8d02-690f7448cf7f] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34","webSecurityEnabled":true}
+[INFO  - 2016-02-08T21:30:39.244Z] Session [32d7a170-ceab-11e5-8d02-690f7448cf7f] - page.customHeaders:  - {}
+[INFO  - 2016-02-08T21:30:39.244Z] Session [32d7a170-ceab-11e5-8d02-690f7448cf7f] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"1.9.8","driverName":"ghostdriver","driverVersion":"1.1.0","platform":"linux-unknown-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2016-02-08T21:30:39.244Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 32d7a170-ceab-11e5-8d02-690f7448cf7f
+[ERROR - 2016-02-08T21:30:48.128Z] Session [32d7a170-ceab-11e5-8d02-690f7448cf7f] - page.onError - msg: TypeError: 'undefined' is not an object (evaluating 's.split')
+[ERROR - 2016-02-08T21:30:48.129Z] Session [32d7a170-ceab-11e5-8d02-690f7448cf7f] - page.onError - stack:
+  s_gi (http://assets.adobedtm.com/6372cf21ef88ee60bc2977a4898dcb5c7945a212/s-code-contents-566dcf5046f148f38d0aa32bf73df40db7ae7768.js:1638)
+  (anonymous function) (http://assets.adobedtm.com/6372cf21ef88ee60bc2977a4898dcb5c7945a212/s-code-contents-566dcf5046f148f38d0aa32bf73df40db7ae7768.js:474)
