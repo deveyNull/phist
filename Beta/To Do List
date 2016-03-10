@@ -1,4 +1,0 @@
-Greyscale the image before passing it in 
-This would enable us to only have to greyscale the image once for both perceptual hashing functions, greatly lowering overhead
-
-In the grand scheme of things we would greyscale and compress the image before actual processing.
