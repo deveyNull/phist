@@ -90,7 +90,7 @@ class MyApp(object):
         options['parent'] = root
         options['title'] = 'This is a title'
 
-        ttk.Label(self.frame, text="File Path: ").pack(side=LEFT)
+        ttk.Label(self.frame, text="File Path:  ").pack(side=LEFT)
 
         # ttk.Entry(self.frame, width=10, textvariable=self.filePath).pack(side = LEFT)
         Tk.Button(self.frame, text='  Select File Path  ', command=self.askopenfilename).pack(side=LEFT)
